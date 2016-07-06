@@ -10,55 +10,77 @@
     <script type="text/javascript" src="fullPage/jquery.fullPage.js"></script>
   </head>
   <body>
-    <div class="curtain"></div>
-    <div id="fullpage">
-      <div class="section section0 active">
-        <div class="wrapper">
-          <div class="left">Left 0</div>
-          <div class="right">Right 0</div>
-        </div>
+    <div class="hash-slider">
+      <div class="curtain">
+        #
+        <div class="text-placeholder"></div>
       </div>
-      <div class="section section1">
-        <div class="wrapper">
-          <div class="left">Left 1</div>
-          <div class="right">Right 1</div>
+      <div id="fullpage">
+        <div class="section section0 active">
+          <div class="wrapper">
+            <div class="left text">Left 0</div>
+            <div class="right">Right 0</div>
+          </div>
         </div>
-      </div>
-      <div class="section section2">
-        <div class="wrapper">
-          <div class="left">Left 2</div>
-          <div class="right">Right 2</div>
+        <div class="section section1">
+          <div class="wrapper">
+            <div class="left">Left 1</div>
+            <div class="right text">Right 1</div>
+          </div>
         </div>
-      </div>
-      <div class="section section3">
-        <div class="wrapper">
-          <div class="left"Left 3></div>
-          <div class="right">Right 2</div>
+        <div class="section section2">
+          <div class="wrapper">
+            <div class="left text">Left 2</div>
+            <div class="right">Right 2</div>
+          </div>
+        </div>
+        <div class="section section3">
+          <div class="wrapper">
+            <div class="left">Left 3</div>
+            <div class="right text">Right 3</div>
+          </div>
+        </div>
+        <div class="section section4">
+          <div class="wrapper">
+            <div class="left text">Left 4</div>
+            <div class="right">Right 4</div>
+          </div>
         </div>
       </div>
     </div>
+
     <script type="text/javascript">
       $(document).ready(function() {
+
         $('#fullpage').fullpage({
 
-          //events
-          onLeave: function(index, nextIndex, direction){
-            console.log(index);
-            if (index%2 == 1) {
-              $('.curtain').animate({
-                width: "100%",
-                background: "red"
-              }, 1000, function() {
-                // $('.curtain').css('width', '50%');
-                // $('.curtain').css('float', 'right');
-              });
-            }
-          },
-          afterLoad: function(anchorLink, index){},
-          afterRender: function(){},
-          afterResize: function(){},
-          afterSlideLoad: function(anchorLink, index, slideAnchor, slideIndex){},
-          onSlideLeave: function(anchorLink, index, slideIndex, direction, nextSlideIndex){}
+            // Events.
+            onLeave: function(index, nextIndex, direction){
+              $('.curtain').addClass('full');
+              $('.text-placeholder').fadeOut('slow');
+            },
+            afterLoad: function(anchorLink, index){
+              setTimeout(function() {
+                $('.curtain').removeClass('full');
+                $('.curtain').toggleClass('white');
+                $('.curtain').toggleClass('black');
+
+                text = $('.section').eq(index-1).find('.text').text();
+                $('.text-placeholder').text(text);
+                $('.text-placeholder').fadeIn('slow');
+              },300);
+            },
+            afterRender: function(){
+              setTimeout(function() {
+                $('.curtain').addClass('white');
+                $('.curtain').removeClass('black');
+
+                text = $('.section').eq(0).find('.text').text();
+                $('.text-placeholder').text(text);
+                $('.text-placeholder').fadeIn('slow');
+              },300);
+            },
+            afterResize: function(){},
         });
       });
     </script>
